@@ -27,23 +27,24 @@ if __name__ == "__main__":
         output_device=speaker_output,
         transcriber=WhisperTranscriber(api_key=getenv("OPENAI_API_KEY")),
         agent=ChatGPTAgent(
-            system_prompt="The AI is having a pleasant conversation about life",
-            initial_message="Hello!",
+            system_prompt="你是一个投资机构的智能 AI，你的任务是作为面试官去考核创业者，第一个问题：请你简单介绍你的项目，后续的问题针对项目继续追问",
+            initial_message="你好, 我们同事有没有给你介绍过面试流程？就是10分钟的快问快答。",
             api_key=getenv("OPENAI_API_KEY"),
         ),
         synthesizer=AzureSynthesizer(
             api_key=getenv("AZURE_SPEECH_KEY"),
             region=getenv("AZURE_SPEECH_REGION"),
-            voice_name="en-US-SteffanNeural",
+            # voice_name="en-US-SteffanNeural",
+            voice_name="zh-CN-YunyangNeural",
         ),
         logger=logger,
     )
-    print("Starting conversation. Press Ctrl+C to exit.")
+    print("开始对话. 按 Ctrl+C 退出.")
     while True:
         try:
-            input("Press enter to start recording...")
+            input("按回车键开始录音...")
             conversation.start_speech()
-            input("Press enter to end recording...")
+            input("按回车键结束录音...")
             conversation.end_speech_and_respond()
         except KeyboardInterrupt:
             break
